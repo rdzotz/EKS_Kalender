@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
     <title>Schulkalender Abonnement - Erich Kästner Grundschule</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
     <style>
@@ -94,19 +97,27 @@
         // Placeholder for last updated time
         document.getElementById('last-updated').textContent = new Date().toLocaleString('de-DE');
 
-        // Dynamically build the ICS URL based on where the page is currently hosted
-        const currentPath = window.location.pathname.endsWith('/') ? window.location.pathname : window.location.pathname + '/';
-        const fullUrl = window.location.origin + currentPath + "school-calendar.ics";
-        const webcalUrl = fullUrl.replace(/^https?:\/\//, "webcal://");
-        
-        // Update all links on the page automatically
-        document.querySelector('.subscribe-btn').href = webcalUrl;
-        const copyLinkEl = document.querySelector('.copy-link');
-        if (copyLinkEl) {
-            copyLinkEl.textContent = fullUrl;
+        function updateLinks() {
+            // Dynamically build the ICS URL based on where the page is currently hosted
+            const currentPath = window.location.pathname.endsWith('/') ? window.location.pathname : window.location.pathname + '/';
+            const fullUrl = window.location.origin + currentPath + "school-calendar.ics";
+            const webcalUrl = fullUrl.replace(/^https?:\/\//, "webcal://");
+            
+            console.log("Detecting domain... Found:", window.location.origin);
+            console.log("Generating Calendar URL:", fullUrl);
+
+            // Update the main subscribe button
+            const subBtn = document.querySelector('.subscribe-btn');
+            if (subBtn) subBtn.href = webcalUrl;
+
+            // Update the visual link in the instructions
+            const copyLinkEl = document.querySelector('.copy-link');
+            if (copyLinkEl) copyLinkEl.textContent = fullUrl;
         }
 
-        console.log("Calendar URL generated:", fullUrl);
+        // Run immediately and also on load to be safe
+        updateLinks();
+        window.addEventListener('load', updateLinks);
     </script>
 </body>
 </html>

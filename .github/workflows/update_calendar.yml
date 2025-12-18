@@ -4,10 +4,6 @@ on:
   push:
     branches:
       - main
-    paths:
-      - 'calendar.csv'
-      - 'generate_ics.py'
-      - '.github/workflows/update_calendar.yml'
   workflow_dispatch:
 
 permissions:
