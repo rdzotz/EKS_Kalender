@@ -74,13 +74,23 @@
     <button class="theme-toggle" id="theme-toggle" title="Farbschema wechseln">🌓</button>
     <main class="container">
         <hgroup>
-            <h1>Schulkalender Abonnement</h1>
-            <h2>Verpassen Sie nie wieder einen Schultermin!</h2>
+            <h1>Erich Kästner Grundschule</h1>
+            <h2>Schulkalender Abonnements</h2>
         </hgroup>
 
-        <p>Abonnieren Sie den offiziellen Kalender der Erich Kästner Grundschule direkt auf Ihrem Smartphone, Tablet oder Computer. Termine werden automatisch aktualisiert.</p>
+        <p>Abonnieren Sie die offiziellen Kalender direkt auf Ihrem Smartphone, Tablet oder Computer. Wählen Sie das passende Schuljahr aus.</p>
 
-        <a href="webcal://rdzotz.github.io/EKS_Kalender/school-calendar.ics" class="subscribe-btn">Kalender jetzt abonnieren</a>
+        <div class="calendar-selection">
+            <article>
+                <header><strong>Schuljahr 2025 / 2026</strong></header>
+                <p>Der aktuelle Terminplan für das laufende Schuljahr.</p>
+                <a href="webcal://rdzotz.github.io/EKS_Kalender/calendars/eks_2025_2026.ics" class="subscribe-btn" data-calendar="eks_2025_2026.ics">Kalender 25/26 abonnieren</a>
+                <footer>
+                    <small>Link für manuelles Hinzufügen:<br>
+                    <code class="copy-link">https://rdzotz.github.io/EKS_Kalender/calendars/eks_2025_2026.ics</code></small>
+                </footer>
+            </article>
+        </div>
 
         <div class="instructions">
             <h3>So funktioniert es:</h3>
@@ -155,21 +165,29 @@
         document.getElementById('last-updated').textContent = new Date().toLocaleString('de-DE');
 
         function updateLinks() {
-            // Dynamically build the ICS URL based on where the page is currently hosted
             const currentPath = window.location.pathname.endsWith('/') ? window.location.pathname : window.location.pathname + '/';
-            const fullUrl = window.location.origin + currentPath + "school-calendar.ics";
-            const webcalUrl = fullUrl.replace(/^https?:\/\//, "webcal://");
+            const baseWebcal = "webcal://" + window.location.host + currentPath + "calendars/";
+            const baseHttps = window.location.origin + currentPath + "calendars/";
             
-            console.log("Detecting domain... Found:", window.location.origin);
-            console.log("Generating Calendar URL:", fullUrl);
+            // Update all calendar cards
+            document.querySelectorAll('.subscribe-btn[data-calendar]').forEach(btn => {
+                const calFile = btn.getAttribute('data-calendar');
+                btn.href = baseWebcal + calFile;
+                
+                // Find the associated copy-link in the same article
+                const card = btn.closest('article');
+                if (card) {
+                    const copyLink = card.querySelector('.copy-link');
+                    if (copyLink) copyLink.textContent = baseHttps + calFile;
+                }
+            });
 
-            // Update the main subscribe button
-            const subBtn = document.querySelector('.subscribe-btn');
-            if (subBtn) subBtn.href = webcalUrl;
-
-            // Update the visual link in the instructions
-            const copyLinkEl = document.querySelector('.copy-link');
-            if (copyLinkEl) copyLinkEl.textContent = fullUrl;
+            // Update the general instruction link
+            const firstCal = document.querySelector('.subscribe-btn[data-calendar]')?.getAttribute('data-calendar');
+            if (firstCal) {
+                const instrLink = document.querySelector('.instructions .copy-link');
+                if (instrLink) instrLink.textContent = baseHttps + firstCal;
+            }
         }
 
         // Run immediately and also on load to be safe
