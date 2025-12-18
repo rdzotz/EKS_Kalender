@@ -8,133 +8,270 @@
     <meta http-equiv="Expires" content="0">
     <title>Schulkalender Abonnement - Erich Kästner Grundschule</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #0056b3;
+            --primary: #2563eb;
+            --primary-hover: #1d4ed8;
+            --bg-light: #f8fafc;
+            --card-bg-light: #ffffff;
+            --text-light: #1e293b;
+            --border-light: #e2e8f0;
         }
         [data-theme="dark"] {
-            --primary: #3d8bff;
+            --primary: #3b82f6;
+            --primary-hover: #60a5fa;
+            --bg-dark: #0f172a;
+            --card-bg-dark: #1e293b;
+            --text-dark: #f1f5f9;
+            --border-dark: #334155;
         }
         body {
-            padding-top: 2rem;
+            background-color: var(--bg-light);
+            color: var(--text-light);
+            padding-top: 4rem;
+            padding-bottom: 4rem;
             transition: background-color 0.3s ease, color 0.3s ease;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+        [data-theme="dark"] body {
+            background-color: var(--bg-dark);
+            color: var(--text-dark);
         }
         .container {
-            max-width: 800px;
+            max-width: 900px;
+        }
+        header.main-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        header.main-header h1 {
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(to right, #2563eb, #3b82f6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
         .theme-toggle {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
+            position: fixed;
+            top: 1.5rem;
+            right: 1.5rem;
             cursor: pointer;
-            border: none;
-            background: none;
+            border: 1px solid var(--border-light);
+            background: var(--card-bg-light);
+            border-radius: 50%;
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+            transition: all 0.2s;
+            z-index: 100;
+        }
+        [data-theme="dark"] .theme-toggle {
+            background: var(--card-bg-dark);
+            border-color: var(--border-dark);
+        }
+        .theme-toggle:hover {
+            transform: scale(1.1);
+        }
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        article.calendar-card {
+            background: var(--card-bg-light);
+            border: 1px solid var(--border-light);
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.05);
+            transition: transform 0.2s;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        [data-theme="dark"] article.calendar-card {
+            background: var(--card-bg-dark);
+            border-color: var(--border-dark);
+        }
+        article.calendar-card:hover {
+            transform: translateY(-4px);
+        }
+        article.calendar-card h3 {
+            margin-top: 0;
             font-size: 1.5rem;
-            padding: 0.5rem;
-            line-height: 1;
+            font-weight: 700;
         }
         .subscribe-btn {
             background-color: var(--primary);
-            color: white;
-            font-size: 1.2rem;
-            padding: 1rem 2rem;
-            border-radius: 8px;
+            color: white !important;
+            font-weight: 600;
+            text-align: center;
+            padding: 0.8rem 1.5rem;
+            border-radius: 12px;
             text-decoration: none;
-            display: inline-block;
-            margin: 2rem 0;
-            transition: background-color 0.3s ease;
+            display: block;
+            margin: 1.5rem 0;
+            transition: all 0.2s;
+            border: none;
         }
         .subscribe-btn:hover {
-            background-color: #004494;
+            background-color: var(--primary-hover);
+            transform: scale(1.02);
         }
-        [data-theme="dark"] .subscribe-btn:hover {
-            background-color: #2a6fcf;
+        .copy-link-wrapper {
+            background: #f1f5f9;
+            padding: 0.75rem;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            position: relative;
         }
-        .instructions {
-            text-align: left;
-            margin-top: 2rem;
+        [data-theme="dark"] .copy-link-wrapper {
+            background: #0f172a;
         }
         .copy-link {
-            background: #f4f4f4;
-            color: #333;
-            padding: 0.5rem;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            font-family: monospace;
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
             word-break: break-all;
+            display: block;
+            margin-top: 0.5rem;
+            color: var(--primary);
         }
-        [data-theme="dark"] .copy-link {
-            background: #2b3137;
-            color: #e6edf3;
-            border-color: #444;
+        .instructions-section {
+            background: var(--card-bg-light);
+            border: 1px solid var(--border-light);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+        [data-theme="dark"] .instructions-section {
+            background: var(--card-bg-dark);
+            border-color: var(--border-dark);
+        }
+        details {
+            border-bottom: 1px solid var(--border-light);
+            padding: 1rem 0;
+        }
+        [data-theme="dark"] details {
+            border-color: var(--border-dark);
+        }
+        details:last-of-type {
+            border-bottom: none;
+        }
+        summary {
+            font-weight: 600;
+            cursor: pointer;
+            list-style: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        summary::after {
+            content: "→";
+            transition: transform 0.2s;
+        }
+        details[open] summary::after {
+            transform: rotate(90deg);
+        }
+        .disclaimer-box {
+            background: #fffbeb;
+            border-left: 4px solid #f59e0b;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-top: 4rem;
+        }
+        [data-theme="dark"] .disclaimer-box {
+            background: #451a03;
+            border-left-color: #d97706;
+            color: #fef3c7;
+        }
+        footer {
+            text-align: center;
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-light);
+            font-size: 0.9rem;
+            color: #64748b;
+        }
+        [data-theme="dark"] footer {
+            border-color: var(--border-dark);
         }
     </style>
 </head>
 <body>
     <button class="theme-toggle" id="theme-toggle" title="Farbschema wechseln">🌓</button>
     <main class="container">
-        <hgroup>
+        <header class="main-header">
             <h1>Erich Kästner Grundschule</h1>
-            <h2>Schulkalender Abonnements</h2>
-        </hgroup>
+            <p>Abonnieren Sie alle wichtigen Schultermine direkt in Ihrem Kalender.</p>
+        </header>
 
-        <p>Abonnieren Sie die offiziellen Kalender direkt auf Ihrem Smartphone, Tablet oder Computer. Wählen Sie das passende Schuljahr aus.</p>
-
-        <div class="calendar-selection">
-            <article>
-                <header><strong>Schuljahr 2025 / 2026</strong></header>
-                <p>Der aktuelle Terminplan für das laufende Schuljahr.</p>
-                <a href="webcal://rdzotz.github.io/EKS_Kalender/calendars/eks_2025_2026.ics" class="subscribe-btn" data-calendar="eks_2025_2026.ics">Kalender 25/26 abonnieren</a>
-                <footer>
-                    <small>Link für manuelles Hinzufügen:<br>
-                    <code class="copy-link">https://rdzotz.github.io/EKS_Kalender/calendars/eks_2025_2026.ics</code></small>
-                </footer>
+        <div class="calendar-grid">
+            <article class="calendar-card">
+                <div>
+                    <h3>Schuljahr 2025 / 2026</h3>
+                    <p>Enthält alle Ferien, Feiertage, Konferenzen und Schulveranstaltungen laut offiziellem Terminplan.</p>
+                </div>
+                <div>
+                    <a href="#" class="subscribe-btn" data-calendar="eks_2025_2026.ics">In Kalender-App öffnen</a>
+                    <div class="copy-link-wrapper">
+                        <strong>Link für manuelles Hinzufügen:</strong>
+                        <code class="copy-link">-- wird geladen --</code>
+                    </div>
+                </div>
             </article>
+            
+            <!-- Future calendar slots will look great here -->
         </div>
 
-        <div class="instructions">
-            <h3>So funktioniert es:</h3>
+        <section class="instructions-section">
+            <h2>Anleitung zur Einrichtung</h2>
             <details>
                 <summary>iPhone / iPad (iOS)</summary>
-                <ol>
-                    <li>Klicken Sie oben auf den Button.</li>
-                    <li>Bestätigen Sie mit "Abonnieren".</li>
-                    <li>Der Kalender erscheint nun in Ihrer Kalender-App.</li>
-                </ol>
+                <div style="padding-top: 1rem;">
+                    <ol>
+                        <li>Tippen Sie oben auf <strong>"In Kalender-App öffnen"</strong>.</li>
+                        <li>Ihr Gerät fragt, ob Sie den Kalender abonnieren möchten. Bestätigen Sie dies.</li>
+                        <li>Der Kalender wird nun automatisch in Ihrer Apple Kalender-App aktualisiert.</li>
+                    </ol>
+                </div>
             </details>
             <details>
                 <summary>Android / Google Kalender</summary>
-                <ol>
-                    <li>Kopieren Sie diesen Link: <br><span class="copy-link">https://rdzotz.github.io/EKS_Kalender/school-calendar.ics</span></li>
-                    <li>Öffnen Sie <a href="https://calendar.google.com" target="_blank">Google Calendar</a> im Browser.</li>
-                    <li>Klicken Sie links bei "Andere Kalender" auf das <strong>+</strong> Zeichen.</li>
-                    <li>Wählen Sie "Per URL".</li>
-                    <li>Fügen Sie den Link ein und klicken Sie auf "Kalender hinzufügen".</li>
-                </ol>
+                <div style="padding-top: 1rem;">
+                    <ol>
+                        <li>Kopieren Sie den oben stehenden <strong>manuellen Link</strong>.</li>
+                        <li>Öffnen Sie <a href="https://calendar.google.com" target="_blank">Google Calendar</a> am Computer.</li>
+                        <li>Klicken Sie links bei "Andere Kalender" auf das <strong>+</strong> Symbol.</li>
+                        <li>Wählen Sie <strong>"Per URL"</strong> und fügen Sie den kopierten Link ein.</li>
+                    </ol>
+                </div>
             </details>
             <details>
                 <summary>Outlook / Mac</summary>
-                <ol>
-                    <li>Klicken Sie oben auf den Button oder fügen Sie den Link als "Abonnement" in Ihrer Kalender-Software hinzu.</li>
-                </ol>
+                <div style="padding-top: 1rem;">
+                    <p>Klicken Sie auf den Button oder fügen Sie den manuellen Link als "Neues Kalenderabonnement" hinzu.</p>
+                </div>
             </details>
-        </div>
-
-        <hr>
-        <section class="disclaimer">
-            <h3>Haftungsausschluss & Wichtige Hinweise</h3>
-            <p><small><strong>Kein offizielles Angebot:</strong> Dies ist ein privates Projekt und steht in <u>keiner offiziellen Verbindung</u> zur Erich Kästner Grundschule oder deren Schulleitung.</small></p>
-            <p><small>Dieser Kalender wird automatisiert aus den öffentlich zugänglichen PDF-Dokumenten der Schule erstellt. Wir übernehmen keine Gewähr für die Richtigkeit, Vollständigkeit oder Aktualität der bereitgestellten Informationen. Maßgeblich sind immer die offiziellen Aushänge und Mitteilungen der Schulleitung.</small></p>
-            <p><small>Sollten Ihnen Fehler auffallen oder Informationen fehlen, freuen wir uns über Ihre Mithilfe: Sie können direkt im GitHub-Repository einen <strong>Pull Request</strong> mit Korrekturen einreichen oder ein <strong>Issue</strong> eröffnen.</small></p>
-            <a href="https://github.com/rdzotz/EKS_Kalender" class="secondary outline" target="_blank">Zum GitHub Repository</a>
         </section>
 
-        <hr>
+        <section class="disclaimer-box">
+            <strong>Haftungsausschluss & Wichtige Hinweise</strong>
+            <p style="margin: 0.5rem 0 0 0; font-size: 0.9rem;">
+                Dies ist ein privates Projekt ohne offizielle Verbindung zur Schulleitung. 
+                Die Daten werden automatisiert erstellt. Maßgeblich sind immer die offiziellen Aushänge der Schule. 
+                Fehler gefunden? <a href="https://github.com/rdzotz/EKS_Kalender" target="_blank">Helfen Sie mit auf GitHub</a>.
+            </p>
+        </section>
+
         <footer>
-            <small>
-                Zuletzt aktualisiert: <span id="last-updated">--</span><br>
-                Projekt auf <a href="https://github.com/rdzotz/EKS_Kalender">GitHub</a>
-            </small>
+            <p>Zuletzt aktualisiert: <span id="last-updated">--</span></p>
+            <p><a href="https://github.com/rdzotz/EKS_Kalender">Quellcode auf GitHub</a></p>
         </footer>
     </main>
 
@@ -143,7 +280,6 @@
         const themeToggle = document.getElementById('theme-toggle');
         const html = document.documentElement;
         
-        // Check for saved theme or system preference
         const savedTheme = localStorage.getItem('theme');
         const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
         
@@ -156,7 +292,6 @@
         themeToggle.addEventListener('click', () => {
             const currentTheme = html.getAttribute('data-theme');
             const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-            
             html.setAttribute('data-theme', newTheme);
             localStorage.setItem('theme', newTheme);
         });
@@ -169,31 +304,20 @@
             const baseWebcal = "webcal://" + window.location.host + currentPath + "calendars/";
             const baseHttps = window.location.origin + currentPath + "calendars/";
             
-            // Update all calendar cards
             document.querySelectorAll('.subscribe-btn[data-calendar]').forEach(btn => {
                 const calFile = btn.getAttribute('data-calendar');
                 btn.href = baseWebcal + calFile;
                 
-                // Find the associated copy-link in the same article
                 const card = btn.closest('article');
                 if (card) {
                     const copyLink = card.querySelector('.copy-link');
                     if (copyLink) copyLink.textContent = baseHttps + calFile;
                 }
             });
-
-            // Update the general instruction link
-            const firstCal = document.querySelector('.subscribe-btn[data-calendar]')?.getAttribute('data-calendar');
-            if (firstCal) {
-                const instrLink = document.querySelector('.instructions .copy-link');
-                if (instrLink) instrLink.textContent = baseHttps + firstCal;
-            }
         }
 
-        // Run immediately and also on load to be safe
         updateLinks();
         window.addEventListener('load', updateLinks);
     </script>
 </body>
 </html>
-
