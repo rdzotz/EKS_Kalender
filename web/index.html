@@ -94,14 +94,19 @@
         // Placeholder for last updated time
         document.getElementById('last-updated').textContent = new Date().toLocaleString('de-DE');
 
-        // Automatically fix the link if the domain is different (optional backup)
-        const icsLink = "school-calendar.ics";
-        const fullUrl = window.location.origin + window.location.pathname + icsLink;
-        const webcalUrl = fullUrl.replace("https://", "webcal://");
+        // Dynamically build the ICS URL based on where the page is currently hosted
+        const currentPath = window.location.pathname.endsWith('/') ? window.location.pathname : window.location.pathname + '/';
+        const fullUrl = window.location.origin + currentPath + "school-calendar.ics";
+        const webcalUrl = fullUrl.replace(/^https?:\/\//, "webcal://");
         
-        // Update the button and instructions if they don't match (prevents future domain change errors)
+        // Update all links on the page automatically
         document.querySelector('.subscribe-btn').href = webcalUrl;
-        document.querySelector('.copy-link').textContent = fullUrl;
+        const copyLinkEl = document.querySelector('.copy-link');
+        if (copyLinkEl) {
+            copyLinkEl.textContent = fullUrl;
+        }
+
+        console.log("Calendar URL generated:", fullUrl);
     </script>
 </body>
 </html>
