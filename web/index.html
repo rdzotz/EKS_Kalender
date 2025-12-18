@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Schulkalender Abonnement - Erich Kästner Grundschule</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
+    <style>
+        :root {
+            --primary: #0056b3;
+        }
+        body {
+            padding-top: 2rem;
+        }
+        .container {
+            max-width: 800px;
+        }
+        .subscribe-btn {
+            background-color: var(--primary);
+            color: white;
+            font-size: 1.2rem;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            text-decoration: none;
+            display: inline-block;
+            margin: 2rem 0;
+        }
+        .subscribe-btn:hover {
+            background-color: #004494;
+        }
+        .instructions {
+            text-align: left;
+            margin-top: 2rem;
+        }
+        .copy-link {
+            background: #f4f4f4;
+            padding: 0.5rem;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-family: monospace;
+            word-break: break-all;
+        }
+    </style>
+</head>
+<body>
+    <main class="container">
+        <hgroup>
+            <h1>Schulkalender Abonnement</h1>
+            <h2>Verpassen Sie nie wieder einen Schultermin!</h2>
+        </hgroup>
+
+        <p>Abonnieren Sie den offiziellen Kalender der Erich Kästner Grundschule direkt auf Ihrem Smartphone, Tablet oder Computer. Termine werden automatisch aktualisiert.</p>
+
+        <a href="webcal://reubenzotz-wilson.github.io/EKS_Kalender/school-calendar.ics" class="subscribe-btn">Kalender jetzt abonnieren</a>
+
+        <div class="instructions">
+            <h3>So funktioniert es:</h3>
+            <details>
+                <summary>iPhone / iPad (iOS)</summary>
+                <ol>
+                    <li>Klicken Sie oben auf den Button.</li>
+                    <li>Bestätigen Sie mit "Abonnieren".</li>
+                    <li>Der Kalender erscheint nun in Ihrer Kalender-App.</li>
+                </ol>
+            </details>
+            <details>
+                <summary>Android / Google Kalender</summary>
+                <ol>
+                    <li>Kopieren Sie diesen Link: <br><span class="copy-link">https://reubenzotz-wilson.github.io/EKS_Kalender/school-calendar.ics</span></li>
+                    <li>Öffnen Sie <a href="https://calendar.google.com" target="_blank">Google Calendar</a> im Browser.</li>
+                    <li>Klicken Sie links bei "Andere Kalender" auf das <strong>+</strong> Zeichen.</li>
+                    <li>Wählen Sie "Per URL".</li>
+                    <li>Fügen Sie den Link ein und klicken Sie auf "Kalender hinzufügen".</li>
+                </ol>
+            </details>
+            <details>
+                <summary>Outlook / Mac</summary>
+                <ol>
+                    <li>Klicken Sie oben auf den Button oder fügen Sie den Link als "Abonnement" in Ihrer Kalender-Software hinzu.</li>
+                </ol>
+            </details>
+        </div>
+
+        <hr>
+        <footer>
+            <small>
+                Zuletzt aktualisiert: <span id="last-updated">--</span><br>
+                Quelle: <a href="https://github.com/reubenzotz-wilson/EKS_Kalender">GitHub Repository</a>
+            </small>
+        </footer>
+    </main>
+
+    <script>
+        // Placeholder for last updated time
+        document.getElementById('last-updated').textContent = new Date().toLocaleString('de-DE');
+    </script>
+</body>
+</html>
+

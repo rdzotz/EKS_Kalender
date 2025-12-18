@@ -1,0 +1,10 @@
+[project]
+name = "school-calendar"
+version = "0.1.0"
+dependencies = [
+    "ics>=0.7",
+    "python-dateutil>=2.8",
+]
+
+[tool.uv]
+managed = true
