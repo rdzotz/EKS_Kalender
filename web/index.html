@@ -12,11 +12,26 @@
         :root {
             --primary: #0056b3;
         }
+        [data-theme="dark"] {
+            --primary: #3d8bff;
+        }
         body {
             padding-top: 2rem;
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
         .container {
             max-width: 800px;
+        }
+        .theme-toggle {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            cursor: pointer;
+            border: none;
+            background: none;
+            font-size: 1.5rem;
+            padding: 0.5rem;
+            line-height: 1;
         }
         .subscribe-btn {
             background-color: var(--primary);
@@ -27,9 +42,13 @@
             text-decoration: none;
             display: inline-block;
             margin: 2rem 0;
+            transition: background-color 0.3s ease;
         }
         .subscribe-btn:hover {
             background-color: #004494;
+        }
+        [data-theme="dark"] .subscribe-btn:hover {
+            background-color: #2a6fcf;
         }
         .instructions {
             text-align: left;
@@ -37,15 +56,22 @@
         }
         .copy-link {
             background: #f4f4f4;
+            color: #333;
             padding: 0.5rem;
             border: 1px solid #ccc;
             border-radius: 4px;
             font-family: monospace;
             word-break: break-all;
         }
+        [data-theme="dark"] .copy-link {
+            background: #2b3137;
+            color: #e6edf3;
+            border-color: #444;
+        }
     </style>
 </head>
 <body>
+    <button class="theme-toggle" id="theme-toggle" title="Farbschema wechseln">🌓</button>
     <main class="container">
         <hgroup>
             <h1>Schulkalender Abonnement</h1>
@@ -103,6 +129,28 @@
     </main>
 
     <script>
+        // Theme Toggle Logic
+        const themeToggle = document.getElementById('theme-toggle');
+        const html = document.documentElement;
+        
+        // Check for saved theme or system preference
+        const savedTheme = localStorage.getItem('theme');
+        const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        
+        if (savedTheme) {
+            html.setAttribute('data-theme', savedTheme);
+        } else if (systemPrefersDark) {
+            html.setAttribute('data-theme', 'dark');
+        }
+
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
+            html.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+        });
+
         // Placeholder for last updated time
         document.getElementById('last-updated').textContent = new Date().toLocaleString('de-DE');
 
