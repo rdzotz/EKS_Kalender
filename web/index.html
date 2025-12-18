@@ -51,7 +51,7 @@
 
         <p>Abonnieren Sie den offiziellen Kalender der Erich Kästner Grundschule direkt auf Ihrem Smartphone, Tablet oder Computer. Termine werden automatisch aktualisiert.</p>
 
-        <a href="webcal://reubenzotz-wilson.github.io/EKS_Kalender/school-calendar.ics" class="subscribe-btn">Kalender jetzt abonnieren</a>
+        <a href="webcal://rdzotz.github.io/EKS_Kalender/school-calendar.ics" class="subscribe-btn">Kalender jetzt abonnieren</a>
 
         <div class="instructions">
             <h3>So funktioniert es:</h3>
@@ -66,7 +66,7 @@
             <details>
                 <summary>Android / Google Kalender</summary>
                 <ol>
-                    <li>Kopieren Sie diesen Link: <br><span class="copy-link">https://reubenzotz-wilson.github.io/EKS_Kalender/school-calendar.ics</span></li>
+                    <li>Kopieren Sie diesen Link: <br><span class="copy-link">https://rdzotz.github.io/EKS_Kalender/school-calendar.ics</span></li>
                     <li>Öffnen Sie <a href="https://calendar.google.com" target="_blank">Google Calendar</a> im Browser.</li>
                     <li>Klicken Sie links bei "Andere Kalender" auf das <strong>+</strong> Zeichen.</li>
                     <li>Wählen Sie "Per URL".</li>
@@ -85,7 +85,7 @@
         <footer>
             <small>
                 Zuletzt aktualisiert: <span id="last-updated">--</span><br>
-                Quelle: <a href="https://github.com/reubenzotz-wilson/EKS_Kalender">GitHub Repository</a>
+                Quelle: <a href="https://github.com/rdzotz/EKS_Kalender">GitHub Repository</a>
             </small>
         </footer>
     </main>
@@ -93,6 +93,15 @@
     <script>
         // Placeholder for last updated time
         document.getElementById('last-updated').textContent = new Date().toLocaleString('de-DE');
+
+        // Automatically fix the link if the domain is different (optional backup)
+        const icsLink = "school-calendar.ics";
+        const fullUrl = window.location.origin + window.location.pathname + icsLink;
+        const webcalUrl = fullUrl.replace("https://", "webcal://");
+        
+        // Update the button and instructions if they don't match (prevents future domain change errors)
+        document.querySelector('.subscribe-btn').href = webcalUrl;
+        document.querySelector('.copy-link').textContent = fullUrl;
     </script>
 </body>
 </html>
